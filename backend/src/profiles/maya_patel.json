@@ -1,0 +1,31 @@
+{
+  "name": "Maya Patel",
+  "age": 28,
+  "gender": "female",
+  "mbti": "ISFJ",
+  "bio": "Nurse with a big heart. Family-oriented, love cozy nights in, and believe in traditional values with modern twist.",
+  "instagram_style": "family gatherings, home cooking, cozy aesthetics",
+  "linkedin_summary": "Registered Nurse in pediatrics, dedicated to patient care",
+  "interests": [
+    "cooking",
+    "knitting",
+    "family time",
+    "medical dramas",
+    "gardening"
+  ],
+  "values": [
+    "family",
+    "stability",
+    "caring",
+    "tradition"
+  ],
+  "love_language": "acts of service",
+  "dealbreakers": [
+    "insensitivity",
+    "unpredictability",
+    "lack of family values"
+  ],
+  "communication_style": "gentle and supportive, avoids conflict",
+  "spontaneity_level": 2,
+  "emotional_expressiveness": 5
+}

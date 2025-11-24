@@ -1,0 +1,32 @@
+{
+  "name": "Leo Martinez",
+  "age": 29,
+  "gender": "male",
+  "mbti": "ENFP",
+  "bio": "Adventurer at heart with a passion for connection. Love trying new things and having deep talks under the stars.",
+  "instagram_style": "travel photos, hiking adventures, food discoveries, and candid moments with friends",
+  "linkedin_summary": "Product Manager who believes in building meaningful experiences",
+  "interests": [
+    "hiking",
+    "travel",
+    "coffee",
+    "photography",
+    "reading",
+    "cooking"
+  ],
+  "values": [
+    "authenticity",
+    "adventure",
+    "growth",
+    "kindness"
+  ],
+  "love_language": "quality time",
+  "dealbreakers": [
+    "dishonesty",
+    "negativity",
+    "judgmental attitude"
+  ],
+  "communication_style": "warm and engaging, loves deep meaningful discussions",
+  "spontaneity_level": 7,
+  "emotional_expressiveness": 8
+}

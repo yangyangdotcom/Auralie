@@ -1,0 +1,31 @@
+{
+  "name": "Marcus Johnson",
+  "age": 30,
+  "gender": "male",
+  "mbti": "ISTJ",
+  "bio": "Fitness enthusiast and finance professional. Believe in working hard and living balanced.",
+  "instagram_style": "gym progress, healthy meals, and occasional travel",
+  "linkedin_summary": "Financial Analyst with focus on sustainable investments",
+  "interests": [
+    "fitness",
+    "investing",
+    "basketball",
+    "meal prep",
+    "podcasts"
+  ],
+  "values": [
+    "discipline",
+    "loyalty",
+    "integrity",
+    "health"
+  ],
+  "love_language": "acts of service",
+  "dealbreakers": [
+    "unreliability",
+    "laziness",
+    "financial irresponsibility"
+  ],
+  "communication_style": "direct and practical, values efficiency",
+  "spontaneity_level": 3,
+  "emotional_expressiveness": 4
+}

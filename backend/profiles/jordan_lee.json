@@ -1,0 +1,31 @@
+{
+  "name": "Jordan Lee",
+  "age": 26,
+  "gender": "male",
+  "mbti": "INTJ",
+  "bio": "Architect designing the future. Chess player, classical music lover, and weekend philosopher.",
+  "instagram_style": "architectural photography, chess boards, minimalist aesthetic",
+  "linkedin_summary": "Architect focused on sustainable urban design",
+  "interests": [
+    "architecture",
+    "chess",
+    "classical music",
+    "reading",
+    "museums"
+  ],
+  "values": [
+    "excellence",
+    "intelligence",
+    "vision",
+    "efficiency"
+  ],
+  "love_language": "quality time",
+  "dealbreakers": [
+    "mediocrity",
+    "lack of depth",
+    "emotional drama"
+  ],
+  "communication_style": "thoughtful and strategic, values substance over style",
+  "spontaneity_level": 3,
+  "emotional_expressiveness": 2
+}

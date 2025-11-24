@@ -1,0 +1,30 @@
+{
+  "name": "Alex Kim",
+  "age": 29,
+  "gender": "non-binary",
+  "mbti": "INTP",
+  "bio": "Tech nerd with a soft spot for cats and sci-fi. Building cool things by day, gaming by night.",
+  "instagram_style": "minimal aesthetic, tech setups, cat photos, memes",
+  "linkedin_summary": "Software Engineer specializing in AI/ML systems",
+  "interests": [
+    "programming",
+    "gaming",
+    "sci-fi",
+    "cats",
+    "philosophy"
+  ],
+  "values": [
+    "curiosity",
+    "logic",
+    "independence",
+    "innovation"
+  ],
+  "love_language": "quality time",
+  "dealbreakers": [
+    "anti-intellectualism",
+    "neediness"
+  ],
+  "communication_style": "analytical and precise, enjoys deep debates",
+  "spontaneity_level": 4,
+  "emotional_expressiveness": 3
+}

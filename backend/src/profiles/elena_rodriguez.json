@@ -1,0 +1,32 @@
+{
+  "name": "Elena Rodriguez",
+  "age": 28,
+  "gender": "female",
+  "mbti": "INFP",
+  "bio": "Artist and writer who finds beauty in small moments. Love deep conversations over coffee and exploring new ideas.",
+  "instagram_style": "aesthetic photos of nature, art projects, coffee shops, and thoughtful quotes",
+  "linkedin_summary": "UX Designer passionate about human-centered design and storytelling",
+  "interests": [
+    "painting",
+    "writing",
+    "coffee",
+    "hiking",
+    "reading",
+    "photography"
+  ],
+  "values": [
+    "authenticity",
+    "creativity",
+    "empathy",
+    "growth"
+  ],
+  "love_language": "quality time",
+  "dealbreakers": [
+    "dishonesty",
+    "closed-mindedness",
+    "lack of emotional depth"
+  ],
+  "communication_style": "thoughtful and expressive, loves meaningful conversations",
+  "spontaneity_level": 6,
+  "emotional_expressiveness": 7
+}

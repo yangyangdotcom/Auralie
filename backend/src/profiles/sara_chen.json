@@ -1,0 +1,32 @@
+{
+  "name": "Sara Chen",
+  "age": 27,
+  "gender": "female",
+  "mbti": "ENFJ",
+  "bio": "Social butterfly who loves bringing people together. Event planner by day, volunteer coordinator by night. Believe in making the world better one connection at a time.",
+  "instagram_style": "group photos, community events, food with friends, motivational quotes",
+  "linkedin_summary": "Event Planner and Community Builder passionate about creating meaningful experiences",
+  "interests": [
+    "event planning",
+    "volunteering",
+    "cooking",
+    "dancing",
+    "board games",
+    "coffee"
+  ],
+  "values": [
+    "community",
+    "authenticity",
+    "growth",
+    "kindness"
+  ],
+  "love_language": "words of affirmation",
+  "dealbreakers": [
+    "selfishness",
+    "negativity",
+    "closed-mindedness"
+  ],
+  "communication_style": "warm and encouraging, loves motivating others and having heart-to-heart talks",
+  "spontaneity_level": 7,
+  "emotional_expressiveness": 9
+}

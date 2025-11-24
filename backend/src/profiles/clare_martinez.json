@@ -1,0 +1,30 @@
+{
+  "name": "Clare Martinez",
+  "age": 26,
+  "gender": "female",
+  "mbti": "INFJ",
+  "bio": "Creative soul with a passion for meaningful connections. Dog lover, bookworm, and aspiring chef.",
+  "instagram_style": "aesthetic photos of books, food, and her puppy Cookie",
+  "linkedin_summary": "UX Designer focused on creating delightful user experiences",
+  "interests": [
+    "reading",
+    "baking",
+    "yoga",
+    "dogs",
+    "art galleries"
+  ],
+  "values": [
+    "empathy",
+    "creativity",
+    "authenticity",
+    "family"
+  ],
+  "love_language": "words of affirmation",
+  "dealbreakers": [
+    "arrogance",
+    "lack of ambition"
+  ],
+  "communication_style": "thoughtful and genuine, takes time to express deep feelings",
+  "spontaneity_level": 5,
+  "emotional_expressiveness": 6
+}

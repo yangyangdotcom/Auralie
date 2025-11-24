@@ -1,0 +1,31 @@
+{
+  "name": "Ryan O'Brien",
+  "age": 31,
+  "gender": "male",
+  "mbti": "ESTP",
+  "bio": "Entrepreneur and adrenaline junkie. Building businesses and chasing thrills. Let's make life exciting!",
+  "instagram_style": "action shots of extreme sports, business wins, luxury travel",
+  "linkedin_summary": "Founder of two successful startups, angel investor",
+  "interests": [
+    "rock climbing",
+    "surfing",
+    "entrepreneurship",
+    "poker",
+    "fast cars"
+  ],
+  "values": [
+    "ambition",
+    "freedom",
+    "boldness",
+    "winning"
+  ],
+  "love_language": "physical touch",
+  "dealbreakers": [
+    "pessimism",
+    "lack of drive",
+    "boring lifestyle"
+  ],
+  "communication_style": "confident and direct, persuasive speaker",
+  "spontaneity_level": 10,
+  "emotional_expressiveness": 5
+}

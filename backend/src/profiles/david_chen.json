@@ -1,0 +1,30 @@
+{
+  "name": "David Chen",
+  "age": 28,
+  "gender": "male",
+  "mbti": "ENFP",
+  "bio": "Adventure seeker and dog dad. Love spontaneous road trips and deep conversations over coffee.",
+  "instagram_style": "travel enthusiast with lots of dog photos",
+  "linkedin_summary": "Product Manager at a tech startup, passionate about user experience",
+  "interests": [
+    "hiking",
+    "photography",
+    "cooking",
+    "dogs",
+    "live music"
+  ],
+  "values": [
+    "authenticity",
+    "adventure",
+    "growth",
+    "kindness"
+  ],
+  "love_language": "quality time",
+  "dealbreakers": [
+    "dishonesty",
+    "close-mindedness"
+  ],
+  "communication_style": "warm and expressive, loves to share stories",
+  "spontaneity_level": 8,
+  "emotional_expressiveness": 7
+}

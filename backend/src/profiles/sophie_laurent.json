@@ -1,0 +1,30 @@
+{
+  "name": "Sophie Laurent",
+  "age": 27,
+  "gender": "female",
+  "mbti": "ESFP",
+  "bio": "Life of the party who also loves quiet Sunday mornings. Wine enthusiast and amateur dancer.",
+  "instagram_style": "vibrant party photos, wine tastings, dance videos",
+  "linkedin_summary": "Marketing Manager with passion for brand storytelling",
+  "interests": [
+    "dancing",
+    "wine tasting",
+    "social events",
+    "fashion",
+    "concerts"
+  ],
+  "values": [
+    "fun",
+    "friendship",
+    "living in the moment",
+    "positivity"
+  ],
+  "love_language": "physical touch",
+  "dealbreakers": [
+    "being too serious",
+    "judgmental attitude"
+  ],
+  "communication_style": "energetic and enthusiastic, very expressive",
+  "spontaneity_level": 9,
+  "emotional_expressiveness": 9
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Zara Williams",
+  "age": 29,
+  "gender": "female",
+  "mbti": "ENTP",
+  "bio": "Startup founder who thrives on debate and innovation. Life's too short for boring conversations!",
+  "instagram_style": "startup life, debate club, travel adventures, thought-provoking quotes",
+  "linkedin_summary": "Tech Entrepreneur and Innovation Consultant",
+  "interests": [
+    "debating",
+    "startups",
+    "travel",
+    "podcasting",
+    "improv comedy"
+  ],
+  "values": [
+    "innovation",
+    "freedom",
+    "intellectual growth",
+    "humor"
+  ],
+  "love_language": "words of affirmation",
+  "dealbreakers": [
+    "rigidity",
+    "taking things too personally",
+    "narrow-mindedness"
+  ],
+  "communication_style": "witty and challenging, loves intellectual sparring",
+  "spontaneity_level": 8,
+  "emotional_expressiveness": 6
+}

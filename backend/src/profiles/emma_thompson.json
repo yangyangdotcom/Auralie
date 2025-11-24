@@ -1,0 +1,30 @@
+{
+  "name": "Emma Thompson",
+  "age": 25,
+  "gender": "female",
+  "mbti": "ENFJ",
+  "bio": "Teacher who believes in changing the world one student at a time. Love volunteering and outdoor adventures.",
+  "instagram_style": "teaching moments, volunteering activities, nature photos",
+  "linkedin_summary": "Elementary School Teacher passionate about inclusive education",
+  "interests": [
+    "teaching",
+    "volunteering",
+    "camping",
+    "board games",
+    "gardening"
+  ],
+  "values": [
+    "compassion",
+    "education",
+    "community",
+    "growth"
+  ],
+  "love_language": "words of affirmation",
+  "dealbreakers": [
+    "selfishness",
+    "closed-mindedness"
+  ],
+  "communication_style": "encouraging and warm, natural motivator",
+  "spontaneity_level": 6,
+  "emotional_expressiveness": 8
+}

@@ -1,0 +1,32 @@
+{
+  "name": "Daniel Park",
+  "age": 29,
+  "gender": "male",
+  "mbti": "ISTP",
+  "bio": "Mechanical engineer who finds peace in fixing things. Weekend woodworker and amateur mechanic. Prefer showing care through actions over words.",
+  "instagram_style": "woodworking projects, vintage motorcycles, minimalist aesthetic, outdoor workshops",
+  "linkedin_summary": "Mechanical Engineer focused on sustainable design and problem-solving",
+  "interests": [
+    "woodworking",
+    "motorcycles",
+    "hiking",
+    "coffee",
+    "puzzles",
+    "documentaries"
+  ],
+  "values": [
+    "authenticity",
+    "independence",
+    "craftsmanship",
+    "growth"
+  ],
+  "love_language": "acts of service",
+  "dealbreakers": [
+    "dishonesty",
+    "drama",
+    "manipulation"
+  ],
+  "communication_style": "direct and practical, prefers actions over words, thoughtful when it matters",
+  "spontaneity_level": 4,
+  "emotional_expressiveness": 3
+}
