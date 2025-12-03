@@ -3,12 +3,13 @@ from profile import UserProfile
 from twin import DigitalTwin
 from llm_client import LLMClient
 from activities import ActivityScenario
+from config import Config
 from datetime import datetime
 import json
 import os
 
 class DatingSimulation:
-    """Simulates a 7-day dating experience between two digital twins"""
+    """Simulates a dating experience between two digital twins"""
 
     def __init__(self, profile1: UserProfile, profile2: UserProfile):
         self.profile1 = profile1
@@ -19,8 +20,8 @@ class DatingSimulation:
         self.twin1 = DigitalTwin(profile1, self.llm)
         self.twin2 = DigitalTwin(profile2, self.llm)
 
-        self.twin1.set_partner(profile2.name)
-        self.twin2.set_partner(profile1.name)
+        self.twin1.set_partner(profile2.name, profile2)
+        self.twin2.set_partner(profile1.name, profile1)
 
         self.simulation_log: List[Dict] = []
         self.simulation_id = f"{profile1.name}_{profile2.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -184,10 +185,10 @@ class DatingSimulation:
         return day_log
 
     def run_simulation(self) -> Dict:
-        """Run the complete 7-day simulation"""
+        """Run the complete simulation"""
 
         print(f"\n{'='*60}")
-        print(f"🎭 AURALIE SIMULATION")
+        print(f"🎭 AURALIE SIMULATION ({Config.SIMULATION_DAYS} DAYS)")
         print(f"{'='*60}")
         print(f"👤 {self.profile1.name} ({self.profile1.mbti.value})")
         print(f"💕 {self.profile2.name} ({self.profile2.mbti.value})")
@@ -207,7 +208,7 @@ class DatingSimulation:
         # Simulate each day with error handling
         completed_days = 0
         try:
-            for day in range(1, 8):
+            for day in range(1, Config.SIMULATION_DAYS + 1):
                 print(f"\n📅 DAY {day}")
                 day_log = self.simulate_day(day)
                 simulation_result["days"].append(day_log)
@@ -268,7 +269,7 @@ class DatingSimulation:
         }
 
         simulation_result["status"] = "completed"
-        simulation_result["completed_days"] = 7
+        simulation_result["completed_days"] = Config.SIMULATION_DAYS
         simulation_result["end_time"] = datetime.now().isoformat()
 
         # Save simulation

@@ -38,6 +38,8 @@ export interface SimulationSummary {
   compatibility_score?: number;
   status: string;
   completed_days: number;
+  created_at?: string;
+  completed_at?: string;
 }
 
 export interface SimulationResult {
@@ -46,9 +48,19 @@ export interface SimulationResult {
   profile1: string;
   profile2: string;
   compatibility_score?: number;
-  days: Day[];
-  completed_days: number;
+  days?: Day[];
+  completed_days?: number;
   error?: string;
+  result?: {
+    days: Day[];
+    compatibility: {
+      score: number;
+    };
+    participants: {
+      person1: string;
+      person2: string;
+    };
+  };
 }
 
 export interface CreateProfileRequest {

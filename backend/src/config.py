@@ -23,9 +23,18 @@ class Config:
     OPENROUTER_APP_NAME = os.getenv("OPENROUTER_APP_NAME", "Auralie")
 
     # Simulation settings
-    SIMULATION_DAYS = 7
+    SIMULATION_DAYS = int(os.getenv("SIMULATION_DAYS", "7"))
     TEXTING_SESSIONS_PER_DAY = 2  # Morning and evening
     ACTIVITIES_PER_WEEK = 3  # Physical meetups
+
+    # Fondness System Controls
+    FORCE_FONDNESS_EVALUATION = os.getenv("FORCE_FONDNESS_EVALUATION", "true").lower() == "true"
+    AUTO_INCOMPATIBILITY_PENALTY = os.getenv("AUTO_INCOMPATIBILITY_PENALTY", "true").lower() == "true"
+    ENABLE_COMPATIBILITY_TESTS = os.getenv("ENABLE_COMPATIBILITY_TESTS", "true").lower() == "true"
+    ENFORCE_EMOTIONAL_TONE = os.getenv("ENFORCE_EMOTIONAL_TONE", "true").lower() == "true"
+
+    # Starting fondness level (default: 50, range: 0-100)
+    STARTING_FONDNESS = int(os.getenv("STARTING_FONDNESS", "40"))
 
     # Paths
     PROFILES_DIR = "profiles"

@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, RefreshControl } from 'react-native';
-import { Card, Chip, ActivityIndicator } from 'react-native-paper';
+import { View, Text, StyleSheet, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
+import { Card, Chip, ActivityIndicator, Button } from 'react-native-paper';
+import { useRouter } from 'expo-router';
 import { getProfiles } from '../../src/services/api';
 import { Profile } from '../../src/types';
 
 export default function ProfilesScreen() {
+  const router = useRouter();
   const [profiles, setProfiles] = useState<Profile[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -105,6 +107,16 @@ export default function ProfilesScreen() {
                     Expressiveness: {profile.emotional_expressiveness}/10
                   </Text>
                 </View>
+
+                <Button
+                  mode="contained"
+                  onPress={() => router.push(`/chat/${profile.id}`)}
+                  style={styles.chatButton}
+                  buttonColor="#8b5cf6"
+                  icon="chat"
+                >
+                  Start Chat
+                </Button>
               </Card.Content>
             </Card>
           ))
@@ -198,5 +210,8 @@ const styles = StyleSheet.create({
   trait: {
     fontSize: 12,
     color: '#6b7280',
+  },
+  chatButton: {
+    marginTop: 16,
   },
 });

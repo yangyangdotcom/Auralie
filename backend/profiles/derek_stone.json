@@ -1,0 +1,14 @@
+{
+  "name": "Derek Stone",
+  "age": 32,
+  "gender": "male",
+  "mbti": "ENTJ",
+  "bio": "Investment banker who doesn't have time for mediocrity. If you can't keep up intellectually, don't waste my time.",
+  "instagram_style": "luxury lifestyle, private jet photos, expensive watches, power suits",
+  "linkedin_summary": "Managing Director at Goldman Sachs. Built three successful portfolios. Only interested in winners.",
+  "interests": ["finance", "golf", "luxury cars", "competitive sailing", "collecting art"],
+  "values": ["excellence", "ambition", "efficiency", "winning", "power"],
+  "love_language": "acts of service",
+  "dealbreakers": ["laziness", "weakness", "stupidity", "emotional neediness", "lack of ambition"],
+  "communication_style": "brutally direct, dismissive of incompetence, condescending to those I deem inferior"
+}

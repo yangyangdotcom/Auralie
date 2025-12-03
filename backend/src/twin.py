@@ -1,4 +1,4 @@
-from typing import Dict, List, Optional
+from typing import List, Dict, Optional
 from profile import UserProfile
 from llm_client import LLMClient
 import json
@@ -8,9 +8,10 @@ class EmotionalState:
     """Track emotional state and fondness during interactions"""
 
     def __init__(self, name: str):
+        from config import Config
         self.name = name
         self.current_emotion = "curious"
-        self.fondness_level = 50  # 0-100 scale
+        self.fondness_level = Config.STARTING_FONDNESS  # 0-100 scale (configurable)
         self.history: List[Dict] = []
 
     def update(self, emotion: str, fondness_change: int = 0, context: str = ""):
@@ -47,10 +48,12 @@ class DigitalTwin:
         self.emotional_state = EmotionalState(profile.name)
         self.conversation_history: List[Dict] = []
         self.partner_name: Optional[str] = None
+        self.partner_profile: Optional[UserProfile] = None
 
-    def set_partner(self, partner_name: str):
-        """Set the partner's name for context"""
+    def set_partner(self, partner_name: str, partner_profile: Optional[UserProfile] = None):
+        """Set the partner's name and profile for context"""
         self.partner_name = partner_name
+        self.partner_profile = partner_profile
 
     def respond_to_message(
         self,
@@ -68,7 +71,30 @@ class DigitalTwin:
         """
 
         # Build conversation context
+        from config import Config
         recent_history = self._get_recent_history(5)
+
+        # Build forced evaluation instruction if enabled
+        forced_eval_text = ""
+        if Config.FORCE_FONDNESS_EVALUATION:
+            forced_eval_text = "\n⚠️ CRITICAL: fondness_change MUST be a non-zero value. Evaluate every message carefully - no neutral (0) responses allowed. Every interaction affects compatibility."
+
+        # Build emotional tone enforcement if enabled
+        tone_instruction = ""
+        previous_context = ""
+        if Config.ENFORCE_EMOTIONAL_TONE:
+            from emotional_tone import EmotionalToneGuidelines
+            tone_instruction = EmotionalToneGuidelines.get_tone_instruction(
+                self.emotional_state.current_emotion,
+                self.emotional_state.fondness_level
+            )
+
+            # Add previous interaction context
+            if self.conversation_history:
+                last_interaction = self.conversation_history[-1]
+                last_thought = last_interaction.get("internal_thought", "")
+                last_fondness_change = self.emotional_state.history[-1]["fondness_change"] if self.emotional_state.history else 0
+                previous_context = EmotionalToneGuidelines.get_previous_context(last_thought, last_fondness_change)
 
         prompt = f"""You are responding to a message from {self.partner_name}.
 
@@ -78,19 +104,27 @@ THEIR MESSAGE: "{partner_message}"
 
 RECENT CONVERSATION:
 {recent_history}
-
+{previous_context}
 YOUR CURRENT EMOTIONAL STATE:
 - Current emotion: {self.emotional_state.current_emotion}
 - Fondness level: {self.emotional_state.fondness_level}/100 ({self.emotional_state.get_fondness_description()})
+{tone_instruction}
+IMPORTANT - Respond as a REAL PERSON (this is a compatibility simulation):
+- Analyze their message carefully. Is it respectful? Interesting? Generic? Inappropriate?
+- If they're being disrespectful: Express your discomfort appropriately and reduce fondness (-5 to -10)
+- If they're being thoughtful and align with your values: Show genuine interest and increase fondness (+3 to +10)
+- If they're being generic or boring: Show less enthusiasm, keep it brief (-1 to -3)
+- React authentically like a real {self.profile.mbti.value} person would in a dating scenario
+- Match the energy level of their message appropriately{forced_eval_text}
 
-Respond naturally as {self.profile.name}. Be authentic to your personality.
+Respond naturally as {self.profile.name}. Show authentic emotions that MATCH YOUR TONE GUIDELINES ABOVE.
 
-Provide your response in this exact JSON format:
+Provide your response in this exact JSON format (fondness_change must be a plain integer, do not include + sign):
 {{
     "message": "Your actual response text here",
-    "emotion": "your current emotion (one word: happy, excited, curious, disappointed, annoyed, hopeful, etc.)",
-    "internal_thought": "what you're actually thinking (brief, honest internal monologue)",
-    "fondness_change": <number between -10 and +10 indicating how this interaction affected your interest>
+    "emotion": "your current emotion (one word: happy, excited, curious, annoyed, frustrated, angry, bored, disappointed, offended, intrigued, attracted, unimpressed, confused, irritated, delighted, skeptical, etc.)",
+    "internal_thought": "what you're actually thinking (be brutally honest - this is your private thought that they won't see)",
+    "fondness_change": <integer between -10 and 10, heavily weighted based on their message quality and appropriateness>
 }}"""
 
         system_prompt = self.profile.to_personality_prompt()
@@ -98,7 +132,7 @@ Provide your response in this exact JSON format:
         response_text = self.llm.generate(
             system_prompt=system_prompt,
             user_message=prompt,
-            temperature=0.8,
+            temperature=0.9,  # Higher temperature for more varied, emotional responses
             max_tokens=500
         )
 
@@ -106,28 +140,51 @@ Provide your response in this exact JSON format:
         try:
             response_data = self._extract_json(response_text)
 
+            # Apply automatic incompatibility penalty if enabled
+            fondness_change = response_data.get("fondness_change", 0)
+            if Config.AUTO_INCOMPATIBILITY_PENALTY and self.partner_profile:
+                from compatibility import CompatibilityAnalyzer
+                penalty, _ = CompatibilityAnalyzer.calculate_total_incompatibility_penalty(
+                    self.profile, self.partner_profile
+                )
+                # Apply penalty (cumulative with LLM's assessment)
+                fondness_change += penalty
+                # Cap at -10 to 10 range
+                fondness_change = max(-10, min(10, fondness_change))
+
             # Update emotional state
             self.emotional_state.update(
                 emotion=response_data.get("emotion", "neutral"),
-                fondness_change=response_data.get("fondness_change", 0),
+                fondness_change=fondness_change,
                 context=f"Responded to: {partner_message[:50]}..."
             )
+
+            # Optionally inject compatibility test questions
+            message = response_data["message"]
+            if Config.ENABLE_COMPATIBILITY_TESTS:
+                from compatibility_tests import CompatibilityTestScenarios
+                message = CompatibilityTestScenarios.inject_compatibility_test(message, day)
 
             # Add to conversation history
             self.conversation_history.append({
                 "day": day,
                 "context": context,
                 "partner_message": partner_message,
-                "my_response": response_data["message"],
+                "my_response": message,
                 "emotion": response_data["emotion"],
                 "internal_thought": response_data["internal_thought"],
                 "fondness_level": self.emotional_state.fondness_level
             })
 
+            # Update response data with potentially modified message
+            response_data["message"] = message
+
             return response_data
 
         except Exception as e:
             # Fallback if JSON parsing fails
+            print(f"⚠️  JSON parsing failed for {self.profile.name}: {str(e)}")
+            print(f"Raw response: {response_text[:200]}...")
             return {
                 "message": response_text,
                 "emotion": "neutral",
@@ -140,23 +197,42 @@ Provide your response in this exact JSON format:
         Initiate a conversation with the partner
         Returns same format as respond_to_message
         """
+        from config import Config
+
+        # Build emotional tone enforcement if enabled
+        tone_instruction = ""
+        previous_context = ""
+        if Config.ENFORCE_EMOTIONAL_TONE:
+            from emotional_tone import EmotionalToneGuidelines
+            tone_instruction = EmotionalToneGuidelines.get_tone_instruction(
+                self.emotional_state.current_emotion,
+                self.emotional_state.fondness_level
+            )
+
+            # Add previous interaction context
+            if self.conversation_history:
+                last_interaction = self.conversation_history[-1]
+                last_thought = last_interaction.get("internal_thought", "")
+                last_fondness_change = self.emotional_state.history[-1]["fondness_change"] if self.emotional_state.history else 0
+                previous_context = EmotionalToneGuidelines.get_previous_context(last_thought, last_fondness_change)
 
         prompt = f"""You are starting a conversation with {self.partner_name}.
 
 CONTEXT: Day {day} - {context}
-
+{previous_context}
 YOUR CURRENT STATE:
 - Fondness level: {self.emotional_state.fondness_level}/100
 - Current emotion: {self.emotional_state.current_emotion}
-
+{tone_instruction}
 This is day {day} of your interaction. Start a conversation that feels natural for this stage of getting to know someone.
+Your message tone MUST match your emotional state and fondness level as specified above.
 
-Provide your message in this exact JSON format:
+Provide your message in this exact JSON format (fondness_change must be a plain integer, do not include + sign):
 {{
     "message": "Your message text here",
     "emotion": "your current emotion",
     "internal_thought": "what you're thinking",
-    "fondness_change": <number between -5 and +5>
+    "fondness_change": <integer between -5 and 5>
 }}"""
 
         system_prompt = self.profile.to_personality_prompt()
@@ -164,7 +240,7 @@ Provide your message in this exact JSON format:
         response_text = self.llm.generate(
             system_prompt=system_prompt,
             user_message=prompt,
-            temperature=0.8,
+            temperature=0.9,  # Higher temperature for more varied, emotional responses
             max_tokens=500
         )
 
@@ -174,7 +250,7 @@ Provide your message in this exact JSON format:
             self.emotional_state.update(
                 emotion=response_data.get("emotion", "curious"),
                 fondness_change=response_data.get("fondness_change", 0),
-                context=f"Initiated conversation on day {day}"
+                context=f"Initiated conversation: {context}"
             )
 
             self.conversation_history.append({
@@ -190,6 +266,8 @@ Provide your message in this exact JSON format:
             return response_data
 
         except Exception as e:
+            print(f"⚠️  JSON parsing failed for {self.profile.name}: {str(e)}")
+            print(f"Raw response: {response_text[:200]}...")
             return {
                 "message": response_text,
                 "emotion": "curious",
@@ -198,14 +276,14 @@ Provide your message in this exact JSON format:
             }
 
     def _get_recent_history(self, n: int = 5) -> str:
-        """Get recent conversation history as formatted string"""
+        """Get recent conversation history as a formatted string"""
         if not self.conversation_history:
             return "No previous conversation."
 
         recent = self.conversation_history[-n:]
         lines = []
         for entry in recent:
-            if entry["partner_message"]:
+            if entry.get("partner_message"):
                 lines.append(f"{self.partner_name}: {entry['partner_message']}")
             lines.append(f"You: {entry['my_response']}")
         return "\n".join(lines)
@@ -215,14 +293,19 @@ Provide your message in this exact JSON format:
         # Try to find JSON in the response
         json_match = re.search(r'\{.*\}', text, re.DOTALL)
         if json_match:
-            return json.loads(json_match.group())
+            json_text = json_match.group()
+            # Fix common JSON issues: remove leading + signs from numbers
+            json_text = re.sub(r':\s*\+(\d+)', r': \1', json_text)
+            return json.loads(json_text)
         # If no JSON found, try parsing the whole thing
+        text = re.sub(r':\s*\+(\d+)', r': \1', text)
         return json.loads(text)
 
     def get_final_assessment(self) -> str:
-        """Get final assessment of the relationship after 7 days"""
+        """Get final assessment of the relationship"""
+        from config import Config
 
-        prompt = f"""After spending 7 days getting to know {self.partner_name}, provide your final assessment.
+        prompt = f"""After spending {Config.SIMULATION_DAYS} days getting to know {self.partner_name}, provide your final assessment.
 
 YOUR CURRENT STATE:
 - Final fondness level: {self.emotional_state.fondness_level}/100
@@ -245,4 +328,4 @@ Respond in 2-3 sentences as {self.profile.name}."""
             max_tokens=300
         )
 
-        return assessment
+        return assessment.strip()
