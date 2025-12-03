@@ -67,4 +67,25 @@ export const runSimulation = (profile1_id: string, profile2_id: string) =>
 export const deleteSimulation = (id: string) =>
   api.delete(`/api/simulations/${id}`);
 
+// Chat endpoints
+export const startChat = (profile_id: string, user_name?: string) =>
+  api.post<{ chat_id: string; profile_name: string; profile_mbti: string; initial_fondness: number }>('/api/chats/start', {
+    profile_id,
+    user_name: user_name || 'You',
+  });
+
+export const sendChatMessage = (chat_id: string, message: string, context?: string) =>
+  api.post<{ message: string; emotion: string; internal_thought: string; fondness_change: number; fondness_level: number }>(
+    `/api/chats/${chat_id}/message`,
+    { message, context: context || 'texting' }
+  );
+
+export const getChatHistory = (chat_id: string) =>
+  api.get<{ chat_id: string; profile_name: string; conversation: any[]; current_fondness: number; message_count: number }>(
+    `/api/chats/${chat_id}/history`
+  );
+
+export const endChat = (chat_id: string) =>
+  api.delete<{ message: string; saved_to: string; final_fondness: number }>(`/api/chats/${chat_id}`);
+
 export default api;

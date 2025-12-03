@@ -96,6 +96,11 @@ export default function MatchScreen() {
                 selected1 === profile.id && styles.selectedCard,
                 selected2 === profile.id && styles.disabledCard,
               ]}
+              onPress={() => {
+                if (selected2 !== profile.id) {
+                  setSelected1(profile.id);
+                }
+              }}
             >
               <Card.Content>
                 <View style={styles.cardHeader}>
@@ -132,6 +137,11 @@ export default function MatchScreen() {
                 selected2 === profile.id && styles.selectedCard,
                 selected1 === profile.id && styles.disabledCard,
               ]}
+              onPress={() => {
+                if (selected1 !== profile.id) {
+                  setSelected2(profile.id);
+                }
+              }}
             >
               <Card.Content>
                 <View style={styles.cardHeader}>

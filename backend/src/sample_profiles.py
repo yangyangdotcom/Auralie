@@ -16,9 +16,7 @@ def create_sample_profiles():
             values=["authenticity", "adventure", "growth", "kindness"],
             love_language="quality time",
             dealbreakers=["dishonesty", "close-mindedness"],
-            communication_style="warm and expressive, loves to share stories",
-            spontaneity_level=8,
-            emotional_expressiveness=7
+            communication_style="warm and expressive, loves to share stories"
         ),
 
         UserProfile(
@@ -33,9 +31,7 @@ def create_sample_profiles():
             values=["empathy", "creativity", "authenticity", "family"],
             love_language="words of affirmation",
             dealbreakers=["arrogance", "lack of ambition"],
-            communication_style="thoughtful and genuine, takes time to express deep feelings",
-            spontaneity_level=5,
-            emotional_expressiveness=6
+            communication_style="thoughtful and genuine, takes time to express deep feelings"
         ),
 
         UserProfile(
@@ -50,9 +46,7 @@ def create_sample_profiles():
             values=["discipline", "loyalty", "integrity", "health"],
             love_language="acts of service",
             dealbreakers=["unreliability", "laziness", "financial irresponsibility"],
-            communication_style="direct and practical, values efficiency",
-            spontaneity_level=3,
-            emotional_expressiveness=4
+            communication_style="direct and practical, values efficiency"
         ),
 
         UserProfile(
@@ -67,9 +61,7 @@ def create_sample_profiles():
             values=["fun", "friendship", "living in the moment", "positivity"],
             love_language="physical touch",
             dealbreakers=["being too serious", "judgmental attitude"],
-            communication_style="energetic and enthusiastic, very expressive",
-            spontaneity_level=9,
-            emotional_expressiveness=9
+            communication_style="energetic and enthusiastic, very expressive"
         ),
 
         UserProfile(
@@ -84,9 +76,7 @@ def create_sample_profiles():
             values=["curiosity", "logic", "independence", "innovation"],
             love_language="quality time",
             dealbreakers=["anti-intellectualism", "neediness"],
-            communication_style="analytical and precise, enjoys deep debates",
-            spontaneity_level=4,
-            emotional_expressiveness=3
+            communication_style="analytical and precise, enjoys deep debates"
         ),
 
         UserProfile(
@@ -101,9 +91,7 @@ def create_sample_profiles():
             values=["compassion", "education", "community", "growth"],
             love_language="words of affirmation",
             dealbreakers=["selfishness", "closed-mindedness"],
-            communication_style="encouraging and warm, natural motivator",
-            spontaneity_level=6,
-            emotional_expressiveness=8
+            communication_style="encouraging and warm, natural motivator"
         ),
 
         UserProfile(
@@ -118,9 +106,7 @@ def create_sample_profiles():
             values=["ambition", "freedom", "boldness", "winning"],
             love_language="physical touch",
             dealbreakers=["pessimism", "lack of drive", "boring lifestyle"],
-            communication_style="confident and direct, persuasive speaker",
-            spontaneity_level=10,
-            emotional_expressiveness=5
+            communication_style="confident and direct, persuasive speaker"
         ),
 
         UserProfile(
@@ -135,9 +121,7 @@ def create_sample_profiles():
             values=["family", "stability", "caring", "tradition"],
             love_language="acts of service",
             dealbreakers=["insensitivity", "unpredictability", "lack of family values"],
-            communication_style="gentle and supportive, avoids conflict",
-            spontaneity_level=2,
-            emotional_expressiveness=5
+            communication_style="gentle and supportive, avoids conflict"
         ),
 
         UserProfile(
@@ -152,9 +136,7 @@ def create_sample_profiles():
             values=["excellence", "intelligence", "vision", "efficiency"],
             love_language="quality time",
             dealbreakers=["mediocrity", "lack of depth", "emotional drama"],
-            communication_style="thoughtful and strategic, values substance over style",
-            spontaneity_level=3,
-            emotional_expressiveness=2
+            communication_style="thoughtful and strategic, values substance over style"
         ),
 
         UserProfile(
@@ -169,9 +151,7 @@ def create_sample_profiles():
             values=["innovation", "freedom", "intellectual growth", "humor"],
             love_language="words of affirmation",
             dealbreakers=["rigidity", "taking things too personally", "narrow-mindedness"],
-            communication_style="witty and challenging, loves intellectual sparring",
-            spontaneity_level=8,
-            emotional_expressiveness=6
+            communication_style="witty and challenging, loves intellectual sparring"
         )
     ]
 
