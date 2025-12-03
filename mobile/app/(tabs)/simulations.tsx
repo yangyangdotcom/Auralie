@@ -48,6 +48,30 @@ export default function SimulationsScreen() {
     return 'Not Compatible';
   };
 
+  const formatDate = (dateString?: string) => {
+    if (!dateString) return 'Unknown date';
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 60) {
+      return `${diffMins}m ago`;
+    } else if (diffHours < 24) {
+      return `${diffHours}h ago`;
+    } else if (diffDays < 7) {
+      return `${diffDays}d ago`;
+    } else {
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: date.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+      });
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.centerContainer}>
@@ -80,9 +104,14 @@ export default function SimulationsScreen() {
               <Card style={styles.card}>
                 <Card.Content>
                   <View style={styles.cardHeader}>
-                    <Text style={styles.names}>
-                      {sim.profile1} ♥ {sim.profile2}
-                    </Text>
+                    <View style={styles.nameContainer}>
+                      <Text style={styles.names}>
+                        {sim.profile1} ♥ {sim.profile2}
+                      </Text>
+                      <Text style={styles.dateText}>
+                        {formatDate(sim.created_at)}
+                      </Text>
+                    </View>
                     {sim.compatibility_score !== undefined && (
                       <View style={styles.scoreContainer}>
                         <Text
@@ -93,6 +122,7 @@ export default function SimulationsScreen() {
                         >
                           {sim.compatibility_score}
                         </Text>
+                        <Text style={styles.scoreLabel}>score</Text>
                       </View>
                     )}
                   </View>
@@ -102,7 +132,7 @@ export default function SimulationsScreen() {
                       styles.statusChip,
                       { backgroundColor: getScoreColor(sim.compatibility_score) },
                     ]}
-                    textStyle={{ color: '#fff' }}
+                    textStyle={{ color: '#fff', fontSize: 12 }}
                   >
                     {getScoreLabel(sim.compatibility_score)}
                   </Chip>
@@ -156,10 +186,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 12,
   },
+  nameContainer: {
+    flex: 1,
+    marginRight: 12,
+  },
   names: {
     fontSize: 18,
     fontWeight: 'bold',
-    flex: 1,
+    marginBottom: 4,
+  },
+  dateText: {
+    fontSize: 12,
+    color: '#9ca3af',
   },
   scoreContainer: {
     width: 60,
@@ -170,8 +208,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   score: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
+  },
+  scoreLabel: {
+    fontSize: 10,
+    color: '#6b7280',
+    marginTop: 2,
   },
   statusChip: {
     alignSelf: 'flex-start',

@@ -59,6 +59,10 @@ class SimulationStatus(BaseModel):
     status: str  # "pending", "running", "completed", "failed"
     profile1_id: str
     profile2_id: str
+    profile1: str  # Display name
+    profile2: str  # Display name
+    compatibility_score: Optional[float] = None
+    completed_days: int = 0
     created_at: str
     completed_at: Optional[str] = None
     error: Optional[str] = None
@@ -121,6 +125,8 @@ def run_simulation_sync(profile1: UserProfile, profile2: UserProfile, simulation
 
         simulation_status[simulation_id]["status"] = "completed"
         simulation_status[simulation_id]["completed_at"] = datetime.now().isoformat()
+        simulation_status[simulation_id]["compatibility_score"] = result.get("compatibility", {}).get("score", None)
+        simulation_status[simulation_id]["completed_days"] = result.get("completed_days", 0)
         simulation_status[simulation_id]["result"] = result
 
     except Exception as e:
@@ -181,6 +187,10 @@ async def create_simulation(request: SimulationRequest, background_tasks: Backgr
             "status": "pending",
             "profile1_id": request.profile1_id,
             "profile2_id": request.profile2_id,
+            "profile1": profile1.name,
+            "profile2": profile2.name,
+            "compatibility_score": None,
+            "completed_days": 0,
             "created_at": datetime.now().isoformat(),
             "completed_at": None,
             "error": None
@@ -224,11 +234,20 @@ def list_simulations():
                     with open(os.path.join("simulations", filename), 'r') as f:
                         result = json.load(f)
 
+                    profile1_name = result.get("participants", {}).get("person1", "")
+                    profile2_name = result.get("participants", {}).get("person2", "")
+                    compatibility_score = result.get("compatibility", {}).get("score", None)
+                    completed_days = result.get("completed_days", 0)
+
                     simulations.append(SimulationStatus(
                         simulation_id=sim_id,
                         status=result.get("status", "completed"),
-                        profile1_id=result.get("participants", {}).get("person1", "").lower().replace(" ", "_"),
-                        profile2_id=result.get("participants", {}).get("person2", "").lower().replace(" ", "_"),
+                        profile1_id=profile1_name.lower().replace(" ", "_"),
+                        profile2_id=profile2_name.lower().replace(" ", "_"),
+                        profile1=profile1_name,
+                        profile2=profile2_name,
+                        compatibility_score=compatibility_score,
+                        completed_days=completed_days,
                         created_at=result.get("start_time", ""),
                         completed_at=result.get("end_time", ""),
                         error=result.get("error", None)
@@ -236,6 +255,9 @@ def list_simulations():
                 except Exception as e:
                     print(f"Error loading simulation {filename}: {e}")
                     continue
+
+    # Sort by created_at in descending order (most recent first)
+    simulations.sort(key=lambda x: x.created_at, reverse=True)
 
     return simulations
 

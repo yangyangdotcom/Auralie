@@ -38,6 +38,8 @@ export interface SimulationSummary {
   compatibility_score?: number;
   status: string;
   completed_days: number;
+  created_at?: string;
+  completed_at?: string;
 }
 
 export interface SimulationResult {

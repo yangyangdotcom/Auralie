@@ -121,9 +121,9 @@ export default function SimulationDetailScreen() {
 
   // Extract days from result if nested
   const days = simulation.result?.days || simulation.days || [];
-  const profile1 = simulation.result?.participants.person1 || simulation.profile1;
-  const profile2 = simulation.result?.participants.person2 || simulation.profile2;
-  const compatibilityScore = simulation.result?.compatibility.score || simulation.compatibility_score;
+  const profile1 = simulation.result?.participants?.person1 || simulation.profile1;
+  const profile2 = simulation.result?.participants?.person2 || simulation.profile2;
+  const compatibilityScore = simulation.result?.compatibility?.score || simulation.compatibility_score;
   // Backend uses "final_assessment" (singular), try both singular and plural
   const finalAssessments = simulation.result?.final_assessment || simulation.result?.final_assessments || simulation.final_assessment || simulation.final_assessments || {};
 
