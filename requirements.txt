@@ -1,2 +1,10 @@
-# Install backend dependencies
--r backend/requirements-combined.txt
+# Core dependencies
+openai>=1.0.0
+python-dotenv>=1.0.0
+pydantic>=2.10.0
+
+# FastAPI and API-specific dependencies
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.12
+pydantic-settings>=2.6.0
