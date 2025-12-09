@@ -434,11 +434,17 @@ def list_chats():
 @app.get("/api/debug/status")
 def debug_status():
     """Get server status and configuration"""
+    import os
     return {
         "profiles_count": len(UserProfile.load_all("profiles")),
         "simulations_count": len(simulation_status),
         "active_simulations": sum(1 for s in simulation_status.values() if s["status"] == "running"),
         "working_directory": os.getcwd(),
+        "env_vars_set": {
+            "OPENROUTER_API_KEY": "SET" if os.getenv("OPENROUTER_API_KEY") else "NOT SET",
+            "OPENROUTER_MODEL": os.getenv("OPENROUTER_MODEL", "NOT SET"),
+            "LLM_PROVIDER": os.getenv("LLM_PROVIDER", "NOT SET")
+        }
     }
 
 if __name__ == "__main__":
