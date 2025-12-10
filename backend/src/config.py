@@ -32,7 +32,7 @@ class Config:
     FORCE_FONDNESS_EVALUATION = os.getenv("FORCE_FONDNESS_EVALUATION", "true").lower() == "true"
     AUTO_INCOMPATIBILITY_PENALTY = os.getenv("AUTO_INCOMPATIBILITY_PENALTY", "true").lower() == "true"
     ENABLE_COMPATIBILITY_TESTS = os.getenv("ENABLE_COMPATIBILITY_TESTS", "true").lower() == "true"
-    ENFORCE_EMOTIONAL_TONE = os.getenv("ENFORCE_EMOTIONAL_TONE", "true").lower() == "true"
+    ENFORCE_EMOTIONAL_TONE = os.getenv("ENFORCE_EMOTIONAL_TONE", "false").lower() == "true"  # Disabled - too rigid
 
     # Starting fondness level (default: 50, range: 0-100)
     STARTING_FONDNESS = int(os.getenv("STARTING_FONDNESS", "40"))
