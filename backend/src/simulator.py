@@ -161,8 +161,8 @@ class DatingSimulation:
             "exchanges": morning_texts
         })
 
-        # Physical activity every 2-3 days
-        if day in [2, 4, 6]:
+        # Physical activity every 2-3 days (if enabled)
+        if Config.ENABLE_ACTIVITIES and day in [2, 4, 6]:
             avg_fondness = (
                 self.twin1.emotional_state.fondness_level +
                 self.twin2.emotional_state.fondness_level

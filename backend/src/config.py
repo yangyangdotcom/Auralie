@@ -26,6 +26,7 @@ class Config:
     SIMULATION_DAYS = int(os.getenv("SIMULATION_DAYS", "7"))
     TEXTING_SESSIONS_PER_DAY = 2  # Morning and evening
     ACTIVITIES_PER_WEEK = 3  # Physical meetups
+    ENABLE_ACTIVITIES = os.getenv("ENABLE_ACTIVITIES", "true").lower() == "true"  # Enable/disable physical activities
 
     # Fondness System Controls
     FORCE_FONDNESS_EVALUATION = os.getenv("FORCE_FONDNESS_EVALUATION", "true").lower() == "true"
