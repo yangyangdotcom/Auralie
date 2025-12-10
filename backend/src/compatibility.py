@@ -120,8 +120,8 @@ class CompatibilityAnalyzer:
         Calculate total incompatibility penalty for both profiles
         Returns: (penalty_for_profile1, penalty_for_profile2)
         """
-        # MBTI friction (applies to both equally)
-        mbti_friction = cls.calculate_mbti_friction(profile1.mbti, profile2.mbti)
+        # MBTI friction disabled - personality type doesn't affect fondness automatically
+        # mbti_friction = cls.calculate_mbti_friction(profile1.mbti, profile2.mbti)
 
         # Value mismatch (applies to both equally)
         value_mismatch = cls.calculate_value_mismatch(profile1, profile2)
@@ -130,9 +130,9 @@ class CompatibilityAnalyzer:
         dealbreaker1 = cls.check_dealbreaker_violation(profile1, profile2)
         dealbreaker2 = cls.check_dealbreaker_violation(profile2, profile1)
 
-        # Total penalties
-        penalty1 = mbti_friction + value_mismatch + dealbreaker1
-        penalty2 = mbti_friction + value_mismatch + dealbreaker2
+        # Total penalties (no MBTI)
+        penalty1 = value_mismatch + dealbreaker1
+        penalty2 = value_mismatch + dealbreaker2
 
         return (penalty1, penalty2)
 

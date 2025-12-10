@@ -96,35 +96,23 @@ class DigitalTwin:
                 last_fondness_change = self.emotional_state.history[-1]["fondness_change"] if self.emotional_state.history else 0
                 previous_context = EmotionalToneGuidelines.get_previous_context(last_thought, last_fondness_change)
 
-        prompt = f"""You are responding to a message from {self.partner_name}.
+        prompt = f"""Day {day}, {context}
 
-CONTEXT: Day {day} - {context}
+They said: "{partner_message}"
 
-THEIR MESSAGE: "{partner_message}"
-
-RECENT CONVERSATION:
+Recent chat:
 {recent_history}
-{previous_context}
-YOUR CURRENT EMOTIONAL STATE:
-- Current emotion: {self.emotional_state.current_emotion}
-- Fondness level: {self.emotional_state.fondness_level}/100 ({self.emotional_state.get_fondness_description()})
-{tone_instruction}
-IMPORTANT - Respond as a REAL PERSON (this is a compatibility simulation):
-- Analyze their message carefully. Is it respectful? Interesting? Generic? Inappropriate?
-- If they're being disrespectful: Express your discomfort appropriately and reduce fondness (-5 to -10)
-- If they're being thoughtful and align with your values: Show genuine interest and increase fondness (+3 to +10)
-- If they're being generic or boring: Show less enthusiasm, keep it brief (-1 to -3)
-- React authentically like a real {self.profile.mbti.value} person would in a dating scenario
-- Match the energy level of their message appropriately{forced_eval_text}
 
-Respond naturally as {self.profile.name}. Show authentic emotions that MATCH YOUR TONE GUIDELINES ABOVE.
+How you feel right now: {self.emotional_state.current_emotion}, fondness {self.emotional_state.fondness_level}/100
 
-Provide your response in this exact JSON format (fondness_change must be a plain integer, do not include + sign):
+Reply naturally. Don't overthink it. Text back like you would on a dating app.
+
+JSON format:
 {{
-    "message": "Your actual response text here",
-    "emotion": "your current emotion (one word: happy, excited, curious, annoyed, frustrated, angry, bored, disappointed, offended, intrigued, attracted, unimpressed, confused, irritated, delighted, skeptical, etc.)",
-    "internal_thought": "what you're actually thinking (be brutally honest - this is your private thought that they won't see)",
-    "fondness_change": <integer between -10 and 10, heavily weighted based on their message quality and appropriateness>
+    "message": "your text (1-2 sentences usually, don't ask questions every time)",
+    "emotion": "one word (happy/bored/annoyed/excited/etc)",
+    "internal_thought": "what you're really thinking",
+    "fondness_change": integer from -10 to +10 based on how you feel about their message
 }}"""
 
         system_prompt = self.profile.to_personality_prompt()
@@ -142,13 +130,26 @@ Provide your response in this exact JSON format (fondness_change must be a plain
 
             # Apply automatic incompatibility penalty if enabled
             fondness_change = response_data.get("fondness_change", 0)
+            llm_decision = fondness_change
+            value_penalty = 0
+            dealbreaker_penalty = 0
+
             if Config.AUTO_INCOMPATIBILITY_PENALTY and self.partner_profile:
                 from compatibility import CompatibilityAnalyzer
-                penalty, _ = CompatibilityAnalyzer.calculate_total_incompatibility_penalty(
+
+                # Get individual penalties
+                value_mismatch = CompatibilityAnalyzer.calculate_value_mismatch(
                     self.profile, self.partner_profile
                 )
-                # Apply penalty (cumulative with LLM's assessment)
-                fondness_change += penalty
+                dealbreaker = CompatibilityAnalyzer.check_dealbreaker_violation(
+                    self.profile, self.partner_profile
+                )
+
+                value_penalty = value_mismatch
+                dealbreaker_penalty = dealbreaker
+
+                # Apply penalties (cumulative with LLM's assessment)
+                fondness_change += value_penalty + dealbreaker_penalty
                 # Cap at -10 to 10 range
                 fondness_change = max(-10, min(10, fondness_change))
 
@@ -176,8 +177,14 @@ Provide your response in this exact JSON format (fondness_change must be a plain
                 "fondness_level": self.emotional_state.fondness_level
             })
 
-            # Update response data with potentially modified message
+            # Update response data with potentially modified message and breakdown
             response_data["message"] = message
+            response_data["fondness_breakdown"] = {
+                "total": fondness_change,
+                "llm_decision": llm_decision,
+                "value_penalty": value_penalty,
+                "dealbreaker_penalty": dealbreaker_penalty
+            }
 
             return response_data
 
@@ -216,23 +223,18 @@ Provide your response in this exact JSON format (fondness_change must be a plain
                 last_fondness_change = self.emotional_state.history[-1]["fondness_change"] if self.emotional_state.history else 0
                 previous_context = EmotionalToneGuidelines.get_previous_context(last_thought, last_fondness_change)
 
-        prompt = f"""You are starting a conversation with {self.partner_name}.
+        prompt = f"""Day {day}, {context}. You're starting the conversation with {self.partner_name}.
 
-CONTEXT: Day {day} - {context}
-{previous_context}
-YOUR CURRENT STATE:
-- Fondness level: {self.emotional_state.fondness_level}/100
-- Current emotion: {self.emotional_state.current_emotion}
-{tone_instruction}
-This is day {day} of your interaction. Start a conversation that feels natural for this stage of getting to know someone.
-Your message tone MUST match your emotional state and fondness level as specified above.
+You're feeling: {self.emotional_state.current_emotion}, fondness {self.emotional_state.fondness_level}/100
 
-Provide your message in this exact JSON format (fondness_change must be a plain integer, do not include + sign):
+Send a text. Keep it natural and casual.
+
+JSON format:
 {{
-    "message": "Your message text here",
-    "emotion": "your current emotion",
+    "message": "your opening text (keep it simple, 1-2 sentences)",
+    "emotion": "one word",
     "internal_thought": "what you're thinking",
-    "fondness_change": <integer between -5 and 5>
+    "fondness_change": integer from -5 to +5
 }}"""
 
         system_prompt = self.profile.to_personality_prompt()
