@@ -54,7 +54,8 @@ class DatingSimulation:
             "message": init_response["message"],
             "emotion": init_response["emotion"],
             "internal_thought": init_response["internal_thought"],
-            "fondness_level": initiator.emotional_state.fondness_level
+            "fondness_level": initiator.emotional_state.fondness_level,
+            "fondness_breakdown": init_response.get("fondness_breakdown")
         })
 
         # Back and forth exchanges
@@ -70,7 +71,8 @@ class DatingSimulation:
                 "message": resp_response["message"],
                 "emotion": resp_response["emotion"],
                 "internal_thought": resp_response["internal_thought"],
-                "fondness_level": responder.emotional_state.fondness_level
+                "fondness_level": responder.emotional_state.fondness_level,
+                "fondness_breakdown": resp_response.get("fondness_breakdown")
             })
 
             # Initiator replies (except on last exchange)
@@ -85,7 +87,8 @@ class DatingSimulation:
                     "message": init_response["message"],
                     "emotion": init_response["emotion"],
                     "internal_thought": init_response["internal_thought"],
-                    "fondness_level": initiator.emotional_state.fondness_level
+                    "fondness_level": initiator.emotional_state.fondness_level,
+                    "fondness_breakdown": init_response.get("fondness_breakdown")
                 })
 
         return exchanges

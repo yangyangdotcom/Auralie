@@ -142,13 +142,26 @@ Provide your response in this exact JSON format (fondness_change must be a plain
 
             # Apply automatic incompatibility penalty if enabled
             fondness_change = response_data.get("fondness_change", 0)
+            llm_decision = fondness_change
+            value_penalty = 0
+            dealbreaker_penalty = 0
+
             if Config.AUTO_INCOMPATIBILITY_PENALTY and self.partner_profile:
                 from compatibility import CompatibilityAnalyzer
-                penalty, _ = CompatibilityAnalyzer.calculate_total_incompatibility_penalty(
+
+                # Get individual penalties
+                value_mismatch = CompatibilityAnalyzer.calculate_value_mismatch(
                     self.profile, self.partner_profile
                 )
-                # Apply penalty (cumulative with LLM's assessment)
-                fondness_change += penalty
+                dealbreaker = CompatibilityAnalyzer.check_dealbreaker_violation(
+                    self.profile, self.partner_profile
+                )
+
+                value_penalty = value_mismatch
+                dealbreaker_penalty = dealbreaker
+
+                # Apply penalties (cumulative with LLM's assessment)
+                fondness_change += value_penalty + dealbreaker_penalty
                 # Cap at -10 to 10 range
                 fondness_change = max(-10, min(10, fondness_change))
 
@@ -176,8 +189,14 @@ Provide your response in this exact JSON format (fondness_change must be a plain
                 "fondness_level": self.emotional_state.fondness_level
             })
 
-            # Update response data with potentially modified message
+            # Update response data with potentially modified message and breakdown
             response_data["message"] = message
+            response_data["fondness_breakdown"] = {
+                "total": fondness_change,
+                "llm_decision": llm_decision,
+                "value_penalty": value_penalty,
+                "dealbreaker_penalty": dealbreaker_penalty
+            }
 
             return response_data
 
