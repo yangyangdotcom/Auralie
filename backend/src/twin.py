@@ -160,13 +160,8 @@ JSON format:
                 context=f"Responded to: {partner_message[:50]}..."
             )
 
-            # Optionally inject compatibility test questions
-            message = response_data["message"]
-            if Config.ENABLE_COMPATIBILITY_TESTS:
-                from compatibility_tests import CompatibilityTestScenarios
-                message = CompatibilityTestScenarios.inject_compatibility_test(message, day)
-
             # Add to conversation history
+            message = response_data["message"]
             self.conversation_history.append({
                 "day": day,
                 "context": context,
