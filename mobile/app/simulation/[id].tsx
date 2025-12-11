@@ -344,6 +344,28 @@ export default function SimulationDetailScreen() {
         </Card>
       )}
 
+      {/* Date Suggestions */}
+      {(simulation.result?.date_suggestions || simulation.date_suggestions)?.length > 0 && (
+        <Card style={styles.card}>
+          <Card.Content>
+            <Text style={styles.cardTitle}>💡 Conversation Starters for Your Date</Text>
+            <Text style={styles.suggestionsSubtitle}>
+              Based on your simulation, here are specific topics to discuss:
+            </Text>
+            <View style={styles.suggestionsContainer}>
+              {(simulation.result?.date_suggestions || simulation.date_suggestions).map((suggestion, index) => (
+                <View key={index} style={styles.suggestionItem}>
+                  <View style={styles.suggestionNumber}>
+                    <Text style={styles.suggestionNumberText}>{index + 1}</Text>
+                  </View>
+                  <Text style={styles.suggestionText}>{suggestion}</Text>
+                </View>
+              ))}
+            </View>
+          </Card.Content>
+        </Card>
+      )}
+
       {/* Fondness Chart */}
       {days.length > 0 && fondnessData.length > 0 && (
         <Card style={styles.card}>
@@ -799,6 +821,44 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '700',
   },
+  suggestionsSubtitle: {
+    fontSize: 14,
+    color: '#6b7280',
+    marginBottom: 16,
+    lineHeight: 20,
+  },
+  suggestionsContainer: {
+    gap: 12,
+  },
+  suggestionItem: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: '#f9fafb',
+    padding: 12,
+    borderRadius: 8,
+    borderLeftWidth: 3,
+    borderLeftColor: '#8b5cf6',
+  },
+  suggestionNumber: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: '#8b5cf6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 12,
+    marginTop: 2,
+  },
+  suggestionNumberText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '700',
+  },
+  suggestionText: {
+    flex: 1,
+    fontSize: 14,
+    color: '#374151',
+    lineHeight: 20,
   breakdownContainer: {
     marginTop: 8,
     paddingTop: 8,
