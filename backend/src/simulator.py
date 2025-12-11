@@ -155,10 +155,12 @@ class DatingSimulation:
         for day_log in self.simulation_log:
             for session in day_log.get("texting_sessions", []):
                 for exchange in session.get("exchanges", []):
+                    # Handle fondness_breakdown being None
+                    breakdown = exchange.get("fondness_breakdown") or {}
                     conversation_summary.append({
                         "sender": exchange["sender"],
                         "message": exchange["message"],
-                        "fondness_change": exchange.get("fondness_breakdown", {}).get("total", 0)
+                        "fondness_change": breakdown.get("total", 0)
                     })
             for activity in day_log.get("activities", []):
                 for interaction in activity.get("interactions", []):
