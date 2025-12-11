@@ -1,0 +1,40 @@
+{
+  "cli": {
+    "version": ">= 13.2.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "npm_config_legacy_peer_deps": "true"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "channel": "preview",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "npm_config_legacy_peer_deps": "true"
+      }
+    },
+    "production": {
+      "channel": "production",
+      "ios": {
+        "resourceClass": "m-medium"
+      },
+      "env": {
+        "npm_config_legacy_peer_deps": "true"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

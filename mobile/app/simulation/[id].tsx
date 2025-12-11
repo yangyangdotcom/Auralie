@@ -440,6 +440,27 @@ export default function SimulationDetailScreen() {
                             {getEmotionEmoji(exchange.emotion)}
                           </Text>
                         </View>
+                        {exchange.fondness_breakdown && (
+                          <View style={styles.breakdownContainer}>
+                            <Text style={styles.breakdownTitle}>Fondness Change Breakdown:</Text>
+                            <Text style={styles.breakdownItem}>
+                              • Total: <Text style={[styles.breakdownValue, { color: exchange.fondness_breakdown.total >= 0 ? '#10b981' : '#ef4444' }]}>{exchange.fondness_breakdown.total >= 0 ? '+' : ''}{exchange.fondness_breakdown.total}</Text>
+                            </Text>
+                            <Text style={styles.breakdownItem}>
+                              • LLM Decision: <Text style={[styles.breakdownValue, { color: exchange.fondness_breakdown.llm_decision >= 0 ? '#10b981' : '#ef4444' }]}>{exchange.fondness_breakdown.llm_decision >= 0 ? '+' : ''}{exchange.fondness_breakdown.llm_decision}</Text>
+                            </Text>
+                            {exchange.fondness_breakdown.value_penalty !== 0 && (
+                              <Text style={styles.breakdownItem}>
+                                • Value Mismatch: <Text style={styles.breakdownValue}>{exchange.fondness_breakdown.value_penalty}</Text>
+                              </Text>
+                            )}
+                            {exchange.fondness_breakdown.dealbreaker_penalty !== 0 && (
+                              <Text style={styles.breakdownItem}>
+                                • Dealbreaker: <Text style={styles.breakdownValue}>{exchange.fondness_breakdown.dealbreaker_penalty}</Text>
+                              </Text>
+                            )}
+                          </View>
+                        )}
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -488,6 +509,27 @@ export default function SimulationDetailScreen() {
                             {getEmotionEmoji(interaction.emotion)}
                           </Text>
                         </View>
+                        {interaction.fondness_breakdown && (
+                          <View style={styles.breakdownContainer}>
+                            <Text style={styles.breakdownTitle}>Fondness Change Breakdown:</Text>
+                            <Text style={styles.breakdownItem}>
+                              • Total: <Text style={[styles.breakdownValue, { color: interaction.fondness_breakdown.total >= 0 ? '#10b981' : '#ef4444' }]}>{interaction.fondness_breakdown.total >= 0 ? '+' : ''}{interaction.fondness_breakdown.total}</Text>
+                            </Text>
+                            <Text style={styles.breakdownItem}>
+                              • LLM Decision: <Text style={[styles.breakdownValue, { color: interaction.fondness_breakdown.llm_decision >= 0 ? '#10b981' : '#ef4444' }]}>{interaction.fondness_breakdown.llm_decision >= 0 ? '+' : ''}{interaction.fondness_breakdown.llm_decision}</Text>
+                            </Text>
+                            {interaction.fondness_breakdown.value_penalty !== 0 && (
+                              <Text style={styles.breakdownItem}>
+                                • Value Mismatch: <Text style={styles.breakdownValue}>{interaction.fondness_breakdown.value_penalty}</Text>
+                              </Text>
+                            )}
+                            {interaction.fondness_breakdown.dealbreaker_penalty !== 0 && (
+                              <Text style={styles.breakdownItem}>
+                                • Dealbreaker: <Text style={styles.breakdownValue}>{interaction.fondness_breakdown.dealbreaker_penalty}</Text>
+                              </Text>
+                            )}
+                          </View>
+                        )}
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -817,5 +859,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#374151',
     lineHeight: 20,
+  breakdownContainer: {
+    marginTop: 8,
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0, 0, 0, 0.1)',
+  },
+  breakdownTitle: {
+    fontSize: 11,
+    fontWeight: '600',
+    color: '#6b7280',
+    marginBottom: 4,
+  },
+  breakdownItem: {
+    fontSize: 11,
+    color: '#374151',
+    fontFamily: 'monospace',
+    marginBottom: 2,
+  },
+  breakdownValue: {
+    fontSize: 11,
+    fontWeight: '700',
+    fontFamily: 'monospace',
   },
 });

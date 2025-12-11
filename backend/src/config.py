@@ -26,12 +26,12 @@ class Config:
     SIMULATION_DAYS = int(os.getenv("SIMULATION_DAYS", "7"))
     TEXTING_SESSIONS_PER_DAY = 2  # Morning and evening
     ACTIVITIES_PER_WEEK = 3  # Physical meetups
+    ENABLE_ACTIVITIES = os.getenv("ENABLE_ACTIVITIES", "true").lower() == "true"  # Enable/disable physical activities
 
     # Fondness System Controls
     FORCE_FONDNESS_EVALUATION = os.getenv("FORCE_FONDNESS_EVALUATION", "true").lower() == "true"
     AUTO_INCOMPATIBILITY_PENALTY = os.getenv("AUTO_INCOMPATIBILITY_PENALTY", "true").lower() == "true"
-    ENABLE_COMPATIBILITY_TESTS = os.getenv("ENABLE_COMPATIBILITY_TESTS", "true").lower() == "true"
-    ENFORCE_EMOTIONAL_TONE = os.getenv("ENFORCE_EMOTIONAL_TONE", "true").lower() == "true"
+    ENFORCE_EMOTIONAL_TONE = os.getenv("ENFORCE_EMOTIONAL_TONE", "false").lower() == "true"  # Disabled - too rigid
 
     # Starting fondness level (default: 50, range: 0-100)
     STARTING_FONDNESS = int(os.getenv("STARTING_FONDNESS", "40"))

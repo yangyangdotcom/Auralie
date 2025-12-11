@@ -13,7 +13,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.auralie.app"
+      "bundleIdentifier": "com.auralie.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -29,7 +32,21 @@
     "plugins": [
       "expo-router",
       "expo-asset",
-      "expo-font"
-    ]
+      "expo-font",
+      "expo-updates"
+    ],
+    "updates": {
+      "url": "https://u.expo.dev/9e73dd35-6d93-4b37-bc7d-ac76cc5d4389"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9e73dd35-6d93-4b37-bc7d-ac76cc5d4389"
+      }
+    },
+    "owner": "bentan"
   }
 }
