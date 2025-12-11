@@ -859,6 +859,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#374151',
     lineHeight: 20,
+  },
   breakdownContainer: {
     marginTop: 8,
     paddingTop: 8,
