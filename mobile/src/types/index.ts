@@ -51,6 +51,7 @@ export interface SimulationResult {
   days?: Day[];
   completed_days?: number;
   error?: string;
+  date_suggestions?: string[];
   result?: {
     days: Day[];
     compatibility: {
@@ -60,6 +61,7 @@ export interface SimulationResult {
       person1: string;
       person2: string;
     };
+    date_suggestions?: string[];
   };
 }
 
